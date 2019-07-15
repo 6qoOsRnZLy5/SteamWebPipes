@@ -8,8 +8,9 @@
 	View console in your dev tools.
 	
 	<script>
-		var wsprefix = "ws://";
-		var host =  window.location.search.substr(1);
+		var wsprefix = "ws://testapp-myproject.172.19.154.57.nip.io:80";
+		//var host =  window.location.search.substr(1);
+				var host = "";
                 var con = wsprefix.concat(host);
 		var connection = new WebSocket( con, [ 'steam-pics' ] );
 		
