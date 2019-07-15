@@ -1,6 +1,7 @@
 require 'faye/websocket'
 require 'eventmachine'
 require 'faraday'
+require 'json'
 
 webhook = ENV['DISCORD_REMOTE']
 ws = ENV['WS_ENDPOINT']
