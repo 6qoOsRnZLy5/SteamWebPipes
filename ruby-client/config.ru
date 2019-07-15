@@ -27,7 +27,7 @@ EM.run {
   ws.on :message do |event|
     p [:message, event.data]
     resp = conn.post do |req|
-      req.body = "{\"username\": \"test\", \"content\": '\"#{event.data}\"}"
+      req.body = { username: "test", content: event.data }.to_json
     end
     puts resp.status
     puts resp.body
