@@ -19,7 +19,8 @@ EM.run {
     resp = conn.post do |req|
        req.body = "{\"username\": \"test\", \"content\": '\"connected!!!\"}"
     end
-    puts resp
+    puts resp.status
+    puts resp.body
     puts "----------"
   end
 
@@ -28,7 +29,8 @@ EM.run {
     resp = conn.post do |req|
       req.body = "{\"username\": \"test\", \"content\": '\"#{event.data}\"}"
     end
-    puts resp
+    puts resp.status
+    puts resp.body
     puts "----------"
   end
 
