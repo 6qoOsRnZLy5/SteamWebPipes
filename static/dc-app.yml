@@ -1,0 +1,53 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    app: testapp
+  name: testapp
+spec:
+  replicas: 1
+  selector:
+    deploymentconfig: testapp
+  strategy:
+    activeDeadlineSeconds: 21600
+    resources: {}
+    rollingParams:
+      intervalSeconds: 1
+      maxSurge: 25%
+      maxUnavailable: 25%
+      timeoutSeconds: 600
+      updatePeriodSeconds: 1
+    type: Rolling
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: testapp
+        deploymentconfig: testapp
+    spec:
+      containers:
+        - image: ''
+          imagePullPolicy: Always
+          name: testapp
+          ports:
+            - containerPort: 8181
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+  test: false
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - testapp
+        from:
+          kind: ImageStreamTag
+          name: 'testapp:latest'
+      type: ImageChange
+    - type: ConfigChange

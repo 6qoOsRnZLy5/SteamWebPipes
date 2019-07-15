@@ -1,0 +1,30 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: testapp
+  name: testapp
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'testapp:latest'
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    git:
+      ref: master
+      uri: 'https://github.com/xPaw/SteamWebPipes.git'
+    type: Git
+  strategy:
+    sourceStrategy:
+      env:
+        - name: DOTNET_STARTUP_PROJECT
+          value: SteamWebPipes
+      from:
+        kind: ImageStreamTag
+        name: 'dotnet:2.0'
+        namespace: openshift
+    type: Source

@@ -1,0 +1,28 @@
+apiVersion: build.openshift.io/v1
+kind: BuildConfig
+metadata:
+  labels:
+    app: clientgui
+  name: clientgui
+spec:
+  nodeSelector: null
+  output:
+    to:
+      kind: ImageStreamTag
+      name: 'clientgui:latest'
+  postCommit: {}
+  resources: {}
+  runPolicy: Serial
+  source:
+    contextDir: static
+    git:
+      ref: master
+      uri: 'https://github.com/6qoOsRnZLy5/SteamWebPipes.git'
+    type: Git
+  strategy:
+    sourceStrategy:
+      from:
+        kind: ImageStreamTag
+        name: 'httpd:2.4'
+        namespace: openshift
+    type: Source
