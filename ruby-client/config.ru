@@ -18,7 +18,7 @@ EM.run {
     p [:open]
     ws.send('Hello, world!')
     resp = conn.post do |req|
-       req.body = "{\"username\": \"test\", \"content\": '\"connected!!!\"}"
+       req.body = { username: "test", content: 'connected!!!' }.to_json
     end
     puts resp.status
     puts resp.body
