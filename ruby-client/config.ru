@@ -16,12 +16,20 @@ EM.run {
   ws.on :open do |event|
     p [:open]
     ws.send('Hello, world!')
-    conn.post "{\"username\": \"test\", \"content\": '\"connected!!!\"}"
+    resp = conn.post do |req|
+       req.body = "{\"username\": \"test\", \"content\": '\"connected!!!\"}"
+    end
+    puts resp
+    puts "----------"
   end
 
   ws.on :message do |event|
     p [:message, event.data]
-    conn.post "{\"username\": \"test\", \"content\": '\"#{event.data}\"}"
+    resp = conn.post do |req|
+      req.body = "{\"username\": \"test\", \"content\": '\"#{event.data}\"}"
+    end
+    puts resp
+    puts "----------"
   end
 
   ws.on :close do |event|
