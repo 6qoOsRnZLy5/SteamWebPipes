@@ -68,7 +68,7 @@ EM.run {
           if m["Apps"].any?
             id = m["Apps"].keys.first
             puts "change is for an app #{id}"
-            if h.has_key?(id)
+            if h[id]
               puts h[id]
             end
           end
