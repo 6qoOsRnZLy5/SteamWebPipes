@@ -61,7 +61,7 @@ EM.run {
     puts m.class
     puts m["Type"]
     if m["Type"]
-      if m["Type"] = "Changelist"
+      if m["Type"] == "Changelist"
         puts m["ChangeNumber"] 
         if m["Apps"]
           if m["Apps"].any?
