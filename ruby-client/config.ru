@@ -68,17 +68,18 @@ EM.run {
       req.body = { username: "test", content: event.data }.to_json
     end
     puts "----- #{resp.body} -----"
-    if m[:Type]
-      if m[:Type] = "Changelist"
-        puts m[:ChangeNumber] 
-        if m[:Apps].any?
+    m = JSON.parse(event.data)
+    if m["Type"]
+      if m["Type"] = "Changelist"
+        puts m["ChangeNumber"] 
+        if m["Apps"].any?
           puts "change is for an app"
-          id = m[:Apps].keys.first
+          id = m["Apps"].keys.first
           if h.has_key(id)
             puts h[id]
           end
         end
-        if m[:Packages].any?
+        if m["Packages"].any?
           puts "change is for an package"
         end
       end
