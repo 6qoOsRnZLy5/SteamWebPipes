@@ -31,52 +31,45 @@ end
 
 STEAMALLAPPLIST = "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
 response = Faraday.get STEAMALLAPPLIST
-
-puts response.status
-puts response.headers
-puts response.body.class
-
 responsehash = JSON.parse(response.body)
-puts responsehash.class
-
 responsejson = responsehash.to_h
-puts responsejson.class
-
-
 responseapplist = responsejson["applist"]
 responseapplistapps = responseapplist["apps"]
+
 puts responseapplistapps.first
 
 h = Hash.new
-
 responseapplistapps.each_entry do |e|
   appid = e[:appid]
   name = e[:name]
   h[appid] = name
 end
 
+puts h.first
 
-puts "wss is #{ws}"
-puts "discord is #{webhook}"
 EM.run {
   ws = Faye::WebSocket::Client.new(ws, ['steam-pics'])
   puts "em started"
 
   ws.on :message do |event|
-    p [:message, event.data]
     resp = conn.post do |req|
       req.body = { username: "test", content: event.data }.to_json
     end
-    puts "----- #{resp.body} -----"
+    puts "----- #{resp.status} -----"
     m = JSON.parse(event.data)
+    puts m.inspect
+    puts m.class
+    muts m
     if m["Type"]
       if m["Type"] = "Changelist"
         puts m["ChangeNumber"] 
-        if m["Apps"].values.any?
-          puts "change is for an app"
-          id = m["Apps"].keys.first
-          if h.has_key(id)
-            puts h[id]
+        if m["Apps"]
+          if m["Apps"].any?
+            puts "change is for an app"
+            id = m["Apps"].keys.first
+            if h.has_key(id)
+              puts h[id]
+            end
           end
         end
         if m["Packages"].any?
