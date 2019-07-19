@@ -47,6 +47,8 @@ end
 
 puts responseapplistapps.first.inspect
 puts h.first.inspect
+puts responseapplistapps.count
+puts h.count
 puts responseapplistapps.last.inspect
 puts h.to_a.last.inspect
 
