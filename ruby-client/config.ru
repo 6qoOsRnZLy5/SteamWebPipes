@@ -40,8 +40,8 @@ responseapplistapps = responseapplist["apps"]
 
 h = Hash.new
 responseapplistapps.each_entry do |e|
-  appid = e[:appid]
-  name = e[:name]
+  appid = e["appid"]
+  name = e["name"]
   h[appid] = name
 end
 
