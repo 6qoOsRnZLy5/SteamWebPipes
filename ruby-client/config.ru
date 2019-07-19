@@ -31,6 +31,12 @@ end
 def steam_store_url(id)
   "https://store.steampowered.com/app/#{id}/"
 end
+def steampic_banner(id)
+  "https://steamcdn-a.akamaihd.net/steam/apps/#{id}/header_292x136.jpg"
+end
+def steampic_capsule(id)
+  "https://steamcdn-a.akamaihd.net/steam/apps/#{id}/capsule_231x87.jpg"
+end
 
 STEAMALLAPPLIST = "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
 response = Faraday.get STEAMALLAPPLIST
@@ -78,8 +84,10 @@ EM.run {
               steam_store_item = { title: 'View in Steam Store', url: steam_store_link }
               changeset_link = sdb_changeurl(id)
               changeset_item =  { title: "View this changeset", url: changeset_link }
-              embedds = [steam_store_item, changeset_item]
-                     
+              thumbnail_link = steampic_capsule(id)
+              thumbnail_item = { thumbnail: { url: thumbnail_link } }
+              embedds = [thumbnail_item, steam_store_item, changeset_item]
+              
               resp = conn.post do |req|
                 req.body = { username: "plebbot", content: message, embeds: embedds }.to_json
               end
