@@ -43,9 +43,8 @@ responsejson = responsehash.to_h
 puts responsejson.class
 
 puts responsejson.first
-puts responsejson.last
-responseapplist = responsejson[:applist]
-responseapplistapps = responseapplist[:apps]
+responseapplist = responsejson["applist"]
+responseapplistapps = responseapplist["apps"]
 
 h = Hash.new
 
