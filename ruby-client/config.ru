@@ -49,7 +49,7 @@ puts responseapplistapps.first
 
 h = Hash.new
 
-applist.each_entry do |e|
+responseapplistapps.each_entry do |e|
   appid = e[:appid]
   name = e[:name]
   h[appid] = name
