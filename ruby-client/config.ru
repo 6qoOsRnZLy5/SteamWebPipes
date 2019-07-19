@@ -11,6 +11,9 @@ conn = Faraday.new(
          headers: {'Content-Type' => 'application/json'}
 )
 
+puts "wss is #{ws}"
+puts "discord is #{webhook}"
+
 EM.run {
   ws = Faye::WebSocket::Client.new(ws, ['steam-pics'])
 
