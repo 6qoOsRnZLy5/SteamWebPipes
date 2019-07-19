@@ -42,7 +42,7 @@ h = Hash.new
 responseapplistapps.each_entry do |e|
   appid = e["appid"]
   name = e["name"]
-  h[appid] = name
+  h["#{appid}"] = name
 end
 
 puts responseapplistapps.first.inspect
@@ -69,8 +69,8 @@ EM.run {
           if m["Apps"].any?
             id = m["Apps"].keys.first
             puts "change is for an app #{id}"
-            if h[id]
-              puts h[id]
+            if h["#{id}"]
+              puts h["#{id}"]
             else
               puts "id #{id} not in hash"
             end
