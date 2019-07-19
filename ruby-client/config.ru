@@ -57,10 +57,6 @@ EM.run {
   puts "em started"
 
   ws.on :message do |event|
-    resp = conn.post do |req|
-      req.body = { username: "test", content: event.data }.to_json
-    end
-    puts "----- #{resp.status} -----"
     m = JSON.parse(event.data)
     puts m.inspect
     if m["Type"]
@@ -73,6 +69,12 @@ EM.run {
               puts "-> id #{id} IS in hash"
               name = h["#{id}"]
               puts name
+              
+              message = "game #{name} updated!"
+              resp = conn.post do |req|
+                req.body = { username: "plebbot", content: message }.to_json
+              end
+                     
             else
               puts "-> id #{id} NOT in hash"
             end
