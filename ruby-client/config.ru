@@ -37,7 +37,7 @@ puts response.headers
 puts response.body.class
 
 responsehash = JSON.parse(response.body)
-responsejson = responsehash.to_json
+responsejson = responsehash.to_h
 responseapplist = responsejson[:applist]
 responseapplistapps = responseapplist[:apps]
 
