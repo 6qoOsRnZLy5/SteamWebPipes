@@ -45,6 +45,7 @@ puts responsejson.class
 
 responseapplist = responsejson["applist"]
 responseapplistapps = responseapplist["apps"]
+puts responseapplistapps.first
 
 h = Hash.new
 
