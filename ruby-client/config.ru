@@ -45,8 +45,8 @@ responseapplistapps.each_entry do |e|
   h[appid] = name
 end
 
-puts responseapplistapps.first
-puts h.first
+puts responseapplistapps.first.inspect
+puts h.first.inspect
 
 EM.run {
   ws = Faye::WebSocket::Client.new(ws, ['steam-pics'])
@@ -66,8 +66,8 @@ EM.run {
         puts m["ChangeNumber"] 
         if m["Apps"]
           if m["Apps"].any?
-            puts "change is for an app"
             id = m["Apps"].keys.first
+            puts "change is for an app #{id}"
             if h.has_key?(id)
               puts h[id]
             end
