@@ -59,7 +59,7 @@ EM.run {
     m = JSON.parse(event.data)
     puts m.inspect
     puts m.class
-    muts m
+    puts m["Type"]
     if m["Type"]
       if m["Type"] = "Changelist"
         puts m["ChangeNumber"] 
