@@ -38,8 +38,8 @@ puts response.status
 puts response.headers
 puts response.body.class
 applistjson = JSON.parse(response.body)
-puts applistjson.class
-applist = applistjson[:applist][:apps]
+a = applistjson.to_json
+applist = a[:applist][:apps]
 h = Hash.new
 
 applist.each_entry do |e|
