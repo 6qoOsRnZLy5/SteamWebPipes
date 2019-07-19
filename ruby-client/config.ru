@@ -32,6 +32,7 @@ end
 STEAMALLAPPLIST = "https://api.steampowered.com/ISteamApps/GetAppList/v2/"
 response = Faraday.get STEAMALLAPPLIST
 applistjson = JSON.parse(response.body)
+puts applistjson
 applist = applistjson[:applist][:apps]
 h = Hash.new
 
