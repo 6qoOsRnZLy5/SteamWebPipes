@@ -48,7 +48,7 @@ end
 puts responseapplistapps.first.inspect
 puts h.first.inspect
 puts responseapplistapps.last.inspect
-puts h.last.inspect
+puts h.to_a.last.inspect
 
 EM.run {
   ws = Faye::WebSocket::Client.new(ws, ['steam-pics'])
