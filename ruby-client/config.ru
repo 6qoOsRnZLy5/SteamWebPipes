@@ -70,9 +70,11 @@ EM.run {
             id = m["Apps"].keys.first
             puts "change is for an app #{id}"
             if h["#{id}"]
-              puts h["#{id}"]
+              puts "-> id #{id} IS in hash"
+              name = h["#{id}"]
+              puts name
             else
-              puts "id #{id} not in hash"
+              puts "-> id #{id} NOT in hash"
             end
           end
         end
