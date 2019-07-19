@@ -36,7 +36,7 @@ responsejson = responsehash.to_h
 responseapplist = responsejson["applist"]
 responseapplistapps = responseapplist["apps"]
 
-puts responseapplistapps.first
+
 
 h = Hash.new
 responseapplistapps.each_entry do |e|
@@ -45,6 +45,7 @@ responseapplistapps.each_entry do |e|
   h[appid] = name
 end
 
+puts responseapplistapps.first
 puts h.first
 
 EM.run {
@@ -67,7 +68,7 @@ EM.run {
           if m["Apps"].any?
             puts "change is for an app"
             id = m["Apps"].keys.first
-            if h.has_key(id)
+            if h.has_key?(id)
               puts h[id]
             end
           end
