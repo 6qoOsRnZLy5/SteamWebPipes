@@ -72,7 +72,7 @@ EM.run {
     if m["Type"]
       if m["Type"] = "Changelist"
         puts m["ChangeNumber"] 
-        if m["Apps"].any?
+        if m["Apps"].values.any?
           puts "change is for an app"
           id = m["Apps"].keys.first
           if h.has_key(id)
