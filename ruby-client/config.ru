@@ -47,6 +47,8 @@ end
 
 puts responseapplistapps.first.inspect
 puts h.first.inspect
+puts responseapplistapps.last.inspect
+puts h.last.inspect
 
 EM.run {
   ws = Faye::WebSocket::Client.new(ws, ['steam-pics'])
@@ -59,17 +61,16 @@ EM.run {
     puts "----- #{resp.status} -----"
     m = JSON.parse(event.data)
     puts m.inspect
-    puts m.class
-    puts m["Type"]
     if m["Type"]
       if m["Type"] == "Changelist"
-        puts m["ChangeNumber"] 
         if m["Apps"]
           if m["Apps"].any?
             id = m["Apps"].keys.first
             puts "change is for an app #{id}"
             if h[id]
               puts h[id]
+            else
+              puts "id #{id} not in hash"
             end
           end
         end
