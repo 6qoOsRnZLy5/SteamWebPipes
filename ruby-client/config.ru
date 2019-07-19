@@ -16,7 +16,8 @@ puts "discord is #{webhook}"
 
 EM.run {
   ws = Faye::WebSocket::Client.new(ws, ['steam-pics'])
-
+  puts "em started"
+         
   ws.on :open do |event|
     p [:open]
     ws.send('Hello, world!')
