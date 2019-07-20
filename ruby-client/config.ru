@@ -2,6 +2,7 @@ require 'faye/websocket'
 require 'eventmachine'
 require 'faraday'
 require 'json'
+require 'rack'
 
 webhook = ENV['DISCORD_REMOTE']
 ws = ENV['WS_ENDPOINT']
@@ -110,3 +111,5 @@ EM.run {
     ws = nil
   end
 }
+
+run Proc.new { |env| ['200', {'Content-Type' => 'text/html'}, ['get rack\'d']] }
