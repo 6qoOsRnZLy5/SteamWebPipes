@@ -70,7 +70,7 @@ EM.run {
     puts m.inspect
     if m["Type"]
       if m["Type"] == "Changelist"
-        changeid = m["ChangeNumber"].keys.first
+        changeid = m["ChangeNumber"]
         if m["Apps"]
           if m["Apps"].any?
             id = m["Apps"].keys.first
@@ -83,7 +83,7 @@ EM.run {
               message = "Game #{name} updated!"
               steam_store_link = steam_store_url(id)
               steam_store_item = { title: 'View in Steam Store', url: steam_store_link }
-              changeset_link = sdb_changeurl(id)
+              changeset_link = sdb_changeurl(changeid)
               changeset_item =  { title: "View this changeset", url: changeset_link }
               thumbnail_link = steampic_capsule(id)
               thumbnail_item = { thumbnail: { url: thumbnail_link } }
