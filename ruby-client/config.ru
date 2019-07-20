@@ -70,10 +70,11 @@ EM.run {
     puts m.inspect
     if m["Type"]
       if m["Type"] == "Changelist"
+        changeid = m["ChangeNumber"].keys.first
         if m["Apps"]
           if m["Apps"].any?
             id = m["Apps"].keys.first
-            puts "change is for an app #{id}"
+            puts "change #{changeid} is for an app #{id}"
             if h["#{id}"]
               puts "-> id #{id} IS in hash"
               name = h["#{id}"]
