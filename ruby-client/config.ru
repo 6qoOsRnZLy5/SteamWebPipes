@@ -62,6 +62,8 @@ puts h.count
 puts responseapplistapps.last.inspect
 puts h.to_a.last.inspect
 
+run Proc.new { |env| ['200', {'Content-Type' => 'text/html'}, ['get rack\'d']] }
+
 EM.run {
   ws = Faye::WebSocket::Client.new(ws, ['steam-pics'])
   puts "em started"
@@ -112,4 +114,4 @@ EM.run {
   end
 }
 
-run Proc.new { |env| ['200', {'Content-Type' => 'text/html'}, ['get rack\'d']] }
+
