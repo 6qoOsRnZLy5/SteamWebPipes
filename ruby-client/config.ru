@@ -80,19 +80,20 @@ EM.run {
             if h["#{id}"]
               puts "-> id #{id} IS in hash"
               name = h["#{id}"]
-              puts name
-              
-              message = "Game #{name} updated!"
+             
+              title = "Game #{name} updated!"
+              puts title
               steam_store_link = steam_store_url(id)
-              steam_store_item = { title: 'View in Steam Store', url: steam_store_link }
               changeset_link = sdb_changeurl(changeid)
-              changeset_item =  { title: "View this changeset", url: changeset_link }
+              color = 15855113
+              description = "[View App in Steam Store](#{steam_store_link})\n[View Change on SteamDB](#{changeset_link})"
               thumbnail_link = steampic_capsule(id)
-              thumbnail_item = { thumbnail: { url: thumbnail_link } }
-              embedds = [thumbnail_item, steam_store_item, changeset_item]
+              thumbe = { url: thumbnail_link }
+              embededes = { title: title, description: description, color: color, thumbnail: thumbe }
+              embededs = [ embededes ]
               
               resp = conn.post do |req|
-                req.body = { username: "plebbot", content: message, embeds: embedds }.to_json
+                req.body = { username: "plebbot", embeds: embededs }.to_json
               end
                      
             else
