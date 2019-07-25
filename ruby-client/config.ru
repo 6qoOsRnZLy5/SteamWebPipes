@@ -52,7 +52,7 @@ responsejson = responsehash.to_h
 responseapplist = responsejson["applist"]
 responseapplistapps = responseapplist["apps"]
 
-selectionapps = [252490, 258550, 700580]
+selectionapps = ["252490", "258550", "700580"]
 selectionpacks = []
 
 h = Hash.new
@@ -107,7 +107,8 @@ EM.run {
             else
               puts "-> id #{id} NOT in hash"
             end
-            if selectionapps.include? id
+            if selectionapps.include?(id)
+              puts "selectionapps includes this id"
               if h["#{id}"]
                 name = h["#{id}"]
                 title = "Game #{name} updated!"
