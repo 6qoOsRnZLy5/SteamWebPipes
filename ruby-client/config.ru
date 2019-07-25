@@ -119,6 +119,9 @@ EM.run {
                 if id == "252490"
                   description << "<@&603765106584715285>"
                 end
+                if id == "700580"
+                  description << "<@&603889466729562123>"
+                end
                 thumbnail_link = steampic_capsule(id)
                 thumbe = { url: thumbnail_link }
                 embededes = { title: title, description: description, color: color, thumbnail: thumbe }
