@@ -115,6 +115,9 @@ EM.run {
                 changeset_link = sdb_changeurl(changeid)
                 color = 4627368
                 description = "[View App in Steam Store](#{steam_store_link})\n[View Change on SteamDB](#{changeset_link})"
+                if id == 252490
+                  description << "<@&603765106584715285>"
+                end
                 thumbnail_link = steampic_capsule(id)
                 thumbe = { url: thumbnail_link }
                 embededes = { title: title, description: description, color: color, thumbnail: thumbe }
