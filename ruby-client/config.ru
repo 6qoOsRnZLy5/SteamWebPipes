@@ -72,7 +72,7 @@ def create_embds(h, changeid, gameid)
   staging_client_role = ENV["NOTIFY_STAGING_CLIENT_ROLE"]
   stable_server_role = ENV["NOTIFY_STABLE_SERVER_ROLE"]
   if h["#{gameid}"]
-    name = h["#{id}"]
+    name = h["#{gameid}"]
   else 
     name = gameid
   end
@@ -93,7 +93,7 @@ def create_embds(h, changeid, gameid)
   steam_store_link = steam_store_url(gameid)
   changeset_link = sdb_changeurl(changeid)
   description = "#{mention}[View App in Steam Store](#{steam_store_link})\n[View Change on SteamDB](#{changeset_link})"
-  thumbnail_link = steampic_capsule(id)
+  thumbnail_link = steampic_capsule(gameid)
   thumbe = { url: thumbnail_link }
   embededes = { title: title, description: description, color: color, thumbnail: thumbe }
   embededs = [ embededes ]
