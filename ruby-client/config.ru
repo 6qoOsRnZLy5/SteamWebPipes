@@ -3,14 +3,12 @@ require 'eventmachine'
 require 'faraday'
 require 'json'
 
-
 webhook = ENV['DISCORD_REMOTE']
 ws = ENV['WS_ENDPOINT']
 conn = Faraday.new(
          url: webhook,
          headers: {'Content-Type' => 'application/json'}
 )
-
 webhookF = ENV['DISCORD_REMOTE_F']
 connF = Faraday.new(
          url: webhookF,
@@ -69,6 +67,38 @@ puts h.count
 puts responseapplistapps.last.inspect
 puts h.to_a.last.inspect
 
+stable_client_role = ENV["NOTIFY_STABLE_CLIENT_ROLE"]
+staging_client_role = ENV["NOTIFY_STAGING_CLIENT_ROLE"]
+stable_server_role = ENV["NOTIFY_STABLE_SERVER_ROLE"]
+def create_embds(changeid, gameid)
+  if h["#{gameid}"]
+    name = h["#{id}"]
+  else 
+    name = gameid
+  end
+  if gameid == "252490"
+    mention = "<@&#{stable_client_role}>\n"
+    color = 16384000
+  elsif gameid == "258550"
+    mention = "<@&#{stable_server_role}>\n"
+    color = 16435200
+  elsif gameid == "700580"
+    mention = "<@&#{staging_client_role}>\n"
+    color = 2554368
+  else
+    mention = String.new
+    color = 2580357
+  end
+  title = "Game #{name} updated!"
+  steam_store_link = steam_store_url(gameid)
+  changeset_link = sdb_changeurl(changeid)
+  description = "#{mention}[View App in Steam Store](#{steam_store_link})\n[View Change on SteamDB](#{changeset_link})"
+  thumbnail_link = steampic_capsule(id)
+  thumbe = { url: thumbnail_link }
+  embededes = { title: title, description: description, color: color, thumbnail: thumbe }
+  embededs = [ embededes ]
+  return { username: "plebbot", embeds: embededs }.to_json
+end
 
 EM.run {
   ws = Faye::WebSocket::Client.new(ws, ['steam-pics'])
@@ -86,22 +116,10 @@ EM.run {
             id = m["Apps"].keys.first
             puts "change #{changeid} is for an app #{id}"
             if h["#{id}"]
-              puts "-> id #{id} IS in hash"
-              name = h["#{id}"]
-             
-              title = "Game #{name} updated!"
-              puts title
-              steam_store_link = steam_store_url(id)
-              changeset_link = sdb_changeurl(changeid)
-              color = 15855113
-              description = "[View App in Steam Store](#{steam_store_link})\n[View Change on SteamDB](#{changeset_link})"
-              thumbnail_link = steampic_capsule(id)
-              thumbe = { url: thumbnail_link }
-              embededes = { title: title, description: description, color: color, thumbnail: thumbe }
-              embededs = [ embededes ]
+	      mybody = create_embds(changeid, id)
               
               resp = conn.post do |req|
-                req.body = { username: "plebbot", embeds: embededs }.to_json
+                req.body = mybody
               end
                      
             else
@@ -110,38 +128,10 @@ EM.run {
             if selectionapps.include?(id)
               puts "selectionapps includes this id"
               if h["#{id}"]
-                name = h["#{id}"]
-                title = "Game #{name} updated!"
-                steam_store_link = steam_store_url(id)
-                changeset_link = sdb_changeurl(changeid)
-                color = 4627368
-                description = "[View App in Steam Store](#{steam_store_link})\n[View Change on SteamDB](#{changeset_link})"
-                if id == "252490"
-                  description << "\n<@&603765106584715285>"
-                end
-                if id == "700580"
-                  description << "\n<@&603889466729562123>"
-                end
-                thumbnail_link = steampic_capsule(id)
-                thumbe = { url: thumbnail_link }
-                embededes = { title: title, description: description, color: color, thumbnail: thumbe }
-                embededs = [ embededes ]
+                mybody = create_embds(changeid, id)
+
                 resp = connF.post do |req|
-                  req.body = { username: "plebbot", embeds: embededs }.to_json
-                end
-              else
-                name = id
-                title = "Game #{name} updated!"
-                steam_store_link = steam_store_url(id)
-                changeset_link = sdb_changeurl(changeid)
-                color = 4627368
-                description = "[View App in Steam Store](#{steam_store_link})\n[View Change on SteamDB](#{changeset_link})"
-                thumbnail_link = steampic_capsule(id)
-                thumbe = { url: thumbnail_link }
-                embededes = { title: title, description: description, color: color, thumbnail: thumbe }
-                embededs = [ embededes ]
-                resp = connF.post do |req|
-                  req.body = { username: "plebbot", embeds: embededs }.to_json
+                  req.body = mybody
                 end
               end
             end
