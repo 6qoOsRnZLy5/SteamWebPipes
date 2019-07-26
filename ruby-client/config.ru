@@ -67,10 +67,10 @@ puts h.count
 puts responseapplistapps.last.inspect
 puts h.to_a.last.inspect
 
-stable_client_role = ENV["NOTIFY_STABLE_CLIENT_ROLE"]
-staging_client_role = ENV["NOTIFY_STAGING_CLIENT_ROLE"]
-stable_server_role = ENV["NOTIFY_STABLE_SERVER_ROLE"]
-def create_embds(changeid, gameid)
+def create_embds(h, changeid, gameid)
+  stable_client_role = ENV["NOTIFY_STABLE_CLIENT_ROLE"]
+  staging_client_role = ENV["NOTIFY_STAGING_CLIENT_ROLE"]
+  stable_server_role = ENV["NOTIFY_STABLE_SERVER_ROLE"]
   if h["#{gameid}"]
     name = h["#{id}"]
   else 
@@ -116,7 +116,7 @@ EM.run {
             id = m["Apps"].keys.first
             puts "change #{changeid} is for an app #{id}"
             if h["#{id}"]
-	      mybody = create_embds(changeid, id)
+	      mybody = create_embds(h, changeid, id)
               
               resp = conn.post do |req|
                 req.body = mybody
@@ -128,7 +128,7 @@ EM.run {
             if selectionapps.include?(id)
               puts "selectionapps includes this id"
               if h["#{id}"]
-                mybody = create_embds(changeid, id)
+                mybody = create_embds(h, changeid, id)
 
                 resp = connF.post do |req|
                   req.body = mybody
